@@ -1,0 +1,75 @@
+
+  
+  .page {
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 2.5rem;
+  
+    .container {
+      padding: 0 2rem;
+      
+      @media (min-width: 1024px) {
+        padding: 0 4rem;
+      }
+    }
+  }
+  
+  .header {
+    h1 {
+      margin: 0;
+      font-size: 3rem;
+    }
+  }
+  
+  .card2 {
+    border: 1px solid #333;
+    max-width: 100px;
+    border-radius: 3px;
+    margin: 0 auto;
+    transition: box-shadow 0.25s;
+    transition-timing-function: ease-in-out;
+    transform: scale(0.94);
+  
+  
+    img {
+      display: block;
+      max-width: 10%;
+      
+      background-color: #eee;
+    }
+  }
+  
+  .swiper-slide2 {
+    width: 265px;
+  }
+  
+  .swiper-container2 {
+    padding-bottom: 1rem;
+  }
+  
+  .cards-slider2 {
+    padding-top: 2.5rem;
+  }
+  
+  .swiper-slide2 {
+    transform: scale(.94);
+    transition: transform .25s;
+  }
+  
+  .swiper-slide-active2 {
+    transform: scale(1);
+  }
+  
+  .swiper-slide-active2 .card{
+    box-shadow: 0 13px 35px -16px rgb(0 0 0 / 50%);
+  }
+  
+  .read-more {
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #333;
+    display: inline-block;
+    padding: .5rem 1rem;
+    border-radius: 3px;
+  }
+  
