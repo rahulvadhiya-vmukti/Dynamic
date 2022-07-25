@@ -45,6 +45,7 @@ app.use(session({
 }))
 
 //Using all the routes
+
 app.use(`/`, shopRouter);
 app.use(`/`, searchRouter);
 app.use(`/admin`, adminRouter);

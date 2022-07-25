@@ -5,23 +5,10 @@ const productSchema = mongoose.Schema(
 		name: {
 			type: String,
 		},
-<<<<<<< Updated upstream:models/boxproduct.js
-		price: {
-			type: String,
-		},
-		image: {
-			type: String,
-		},
-		description: {
-			type: String,
-		},
-		boxcategory: {
-=======
         image: {
 			type: String,
 		},
 		subcategory: {
->>>>>>> Stashed changes:models/product.js
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "subCategory",
 			required: true,
