@@ -11,16 +11,6 @@ const multer = require("multer");
 const { Product } = require("../models/product");
 const { subCategory } = require("../models/subcategory");
 const { Category } = require("../models/category");
-// const { videosProduct } = require("../models/videosproduct");
-// const { videosCategory } = require("../models/videoscategory");
-// const { festivalProduct } = require("../models/festivalproduct");
-// const { festivalCategory } = require("../models/festivalcategory");
-// const { visitingCategory } = require("../models/visitingcategory");
-// const { visitingProduct } = require("../models/visitingproduct");
-// const { brochureCategory } = require("../models/brochurecategory");
-// const { brochureProduct } = require("../models/brochureproduct");
-// const { boxCategory } = require("../models/boxcategory");
-// const { boxProduct } = require("../models/boxproduct");
 
 const apiKey = process.env.API_KEY;
 

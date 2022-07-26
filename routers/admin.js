@@ -250,7 +250,8 @@ router.get("deleteproduct/:id", isAuth,async (req, res) => {
 		const product = await Product.findByIdAndRemove(req.params.id);
 			
 		if (product) {
-			fileHelper.deleteFile(`public/${product.image}`);
+			cloudinary.v2.uploader.destroy(`${product.image}`);
+			// fileHelper.deleteFile(`public/${product.image}`);
 			return res.status(200).redirect("/admin/product");
 		} else {
 			return res
