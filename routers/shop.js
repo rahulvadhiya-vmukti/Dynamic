@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const _ = require("lodash");
 const { Contact } = require("../models/contact");
 const { Store } = require("../models/store");
 const { User } = require("../models/user");
@@ -11,7 +11,7 @@ const multer = require("multer");
 const { Product } = require("../models/product");
 const { subCategory } = require("../models/subcategory");
 const { Category } = require("../models/category");
-
+var nodemailer = require('nodemailer');
 const apiKey = process.env.API_KEY;
 
 
@@ -133,8 +133,58 @@ router.get(`/:name`, async (req, res, next) => {
 });
 
 
+router.get(`/contact`, async (req, res) => {
+	// const logocategory = await LogoCategory.find().select("name");
 
+	res.render("contact", {
+		cart: req.session.cart,
+		sessionId: req.session._id,
+		anAdmin: req.session.anAdmin,
+		// logocategory: logocategory,
+	});
+});
 
+router.post("/contact", (req,res)=>{
+	var mailContent = {
+		name: req.body.name,
+		email: req.body.email,
+		subject: req.body.subject,
+		phone: req.body.phone,
+		message: req.body.message
+	}
+  
+	var transporter = nodemailer.createTransport({
+		service: 'gmail',
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+		auth: {
+		  user: 'trendswalls@gmail.com',
+		  pass: 'uwvpyibraqjavhvs',
+		}
+	});
+  
+	var mailOptions = {
+		from: mailContent.email,
+		to: 'trendswalls@gmail.com',
+		subject: mailContent.subject,
+		// subject: "mailContent.subject",
+		text: mailContent.name + " sent you a message : \n" + JSON.stringify(mailContent.message) + "\n Subject: " + mailContent.subject + "\n Email id: " + mailContent.email + "\n Phone no: " + mailContent.phone 
+	  };
+  
+	  transporter.sendMail(mailOptions, function(error, info){
+		if (error) {
+		  console.log(error);
+		} else {
+		  console.log('Email sent: ' + info.response);
+		  res.redirect("/contact");
+		}
+	  });  
+  
+	  transporter.close();
+	  
+  });
+  
 
 
 // router.get(`/logoproduct`, async (req, res) => {
