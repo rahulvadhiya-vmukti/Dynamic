@@ -5,6 +5,10 @@ const categorySchema = mongoose.Schema(
 		name: {
 			type: String,
 		},
+		image: {
+			type: String,
+			default:"https://res.cloudinary.com/dfsixliv3/image/upload/v1658858519/upload/medi_ryt5uc.jpg",
+		},
 		created_at: {
 			type: Date,
 			default: Date.now,
@@ -13,6 +17,7 @@ const categorySchema = mongoose.Schema(
 			type: Date,
 			default: Date.now,
 		},
+		
 	},
 	{
 		versionKey: false,

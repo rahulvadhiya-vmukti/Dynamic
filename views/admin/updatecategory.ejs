@@ -5,7 +5,7 @@
 <div class="wrapper">
   <%- include ('component/header.ejs') %> 
   
-  <!-- Left side column. contains the brochure and sidebar -->
+  <!-- Left side column. contains the logo and sidebar -->
   <%- include ('component/aside.ejs') %> 
 
   <!-- Content Wrapper. Contains page content -->
@@ -31,33 +31,19 @@
         </div>
 
         <div class="col-sm-6">
-        <form role="form" enctype="multipart/form-data" action="updatebrochureproduct/<%= brochureproduct.id %>" method="POST">
-          <h2>Add brochureproduct</h2>
+        <form role="form" enctype="multipart/form-data" action="updatecategory/<%= category.id %>" method="POST">
+          <h2>Add logoproduct</h2>
             <div class="box-body">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="<%= brochureproduct.name %>" placeholder="Enter name">
+                <input type="text" class="form-control" id="name" name="name" value="<%= category.name %>" placeholder="Enter name">
               </div>
-              <div class="form-group">
-                <label for="price">Price</label>
-                <input type="text" class="form-control" id="price" name="price" value="<%= brochureproduct.price %>" placeholder="Enter price">
-              </div>
+             
               <div class="form-group">
                 <label for="image">Add image</label>
-                <input type="file" name="image" id="image" value="<%= brochureproduct.image %>">
+                <input type="file" name="image" id="image" value="<%= category.image %>">
               </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea name="description" class="form-control" id="description" value="<%= brochureproduct.description %>" rows="5" placeholder="Enter description"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="brochurecategory">Choose brochurecategory</label>
-                <select id="brochurecategory" name="brochurecategory" value="<%= brochureproduct.brochurecategory.name %>">
-                    <% for( let i = 0; i < brochurecategory.length; i++ ) { %>
-                        <option value="<%- brochurecategory[i]._id %>"><%- brochurecategory[i].name %></option>
-                    <% } %>
-                </select>
-              </div>
+              
             </div>
             <!-- /.box-body -->
 

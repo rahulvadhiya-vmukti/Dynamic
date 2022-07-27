@@ -17,7 +17,7 @@ const apiKey = process.env.API_KEY;
 
 router.get(`/`, async (req, res) => {
 	// const product = await Product.find().limit(8);
-	const category = await Category.find().select("name");
+	const category = await Category.find();
     // const subcategory = await subCategory.find().select("name");
 	res.render("home", {
 		// product: product,
@@ -29,62 +29,8 @@ router.get(`/`, async (req, res) => {
 	});
 });
 
-router.get(`/test`, async (req, res) => {
-	
-	res.render("test", {
-	
-	});
-});
 
 
-
-
-
-// router.get(`/:name`, async (req, res) => {
-// 	const product = await Product.find().limit(8);
-// 	const subcategory = await subCategory.find().select("name");
-//     // const category =  ;
-
-// 	res.render("index", {
-//         category: req.params.name,
-// 		product: product,
-// 		subcategory: subcategory,
-// 		cart: req.session.cart,
-// 		sessionId: req.session._id,
-// 		anAdmin: req.session.anAdmin,
-// 	});
-// });
-// router.get(`/:name`, async (req, res, next) => {
-// 	const pathName = req.params.name;
-// 	const categoryId = await Category.findOne({ name: pathName });
-	
-// 	if (!categoryId) {
-// 		next();
-		
-// 	} 
-//     else {
-// 		const category = await Category.find().select("name");
-//         const subcategory = await subCategory.find({ category: categoryId._id });
-// 		// const product = await Product.find({subcategory: subcategory});
-		
-		
-// 		res.render("index", {
-//             categoryname: req.params.name,
-// 			category: category,
-//             subcategory: subcategory,
-// 			// product:product,
-          
-// 			cart: req.session.cart,
-// 			sessionId: req.session._id,
-// 			anAdmin: req.session.anAdmin,
-// 			pathName: pathName,
-			
-// 		});
-// 		console.log(product)
-        
-// 	}
-    
-// });
 
 router.get("/index",  async (req, res) => {
 	const category = await Category.findOne({ _id: req.query.id });

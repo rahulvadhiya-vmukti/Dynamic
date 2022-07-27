@@ -81,14 +81,24 @@ router.get(`/`, isAuth, async (req, res) => {
 
 
 
+
 router.get(`/category`, isAuth, async (req, res) => {
-	res.render("admin/category");
+	const category = await Category.find();
+	
+	res.render("admin/category", {
+		category: category,
+	});
 });
 
 
-router.post(`/category`, isAuth, async (req, res) => {
+
+router.post(`/category`, isAuth,upload.single("image"), async (req, res) => {
+	const fileName = req.file.filename;
+	const basePath = `https://res.cloudinary.com/dfsixliv3/image/upload/v1657608669/`;
+
 	let category = new Category({
 		name: req.body.category,
+		image: `${basePath}${fileName}`,
 	});
 
 	category = await category.save();
@@ -98,6 +108,7 @@ router.post(`/category`, isAuth, async (req, res) => {
 
 	res.redirect("/admin/category");
 });
+
 
 router.get(`/addsubcategory`, isAuth, async (req, res) => {
 	const category = await Category.find().select("name");
@@ -197,6 +208,36 @@ router.get("/updateproduct", isAuth, async (req, res) => {
 	});
 });
 
+router.get("/updatesubcategory", isAuth, async (req, res) => {
+	const subcategory = await subCategory.findOne({ _id: req.query.id }).populate(
+		"category"
+	);
+	
+	const category = await Category.find().select("name");
+
+	res.render("admin/updatesubcategory", {
+		subcategory: subcategory,
+		category: category,
+		
+	});
+});
+
+router.get("/updatecategory", isAuth, async (req, res) => {
+	const category = await Category.findOne({ _id: req.query.id }).populate(
+		// "subcategory","product"
+	);
+	// const subcategory = await subCategory.find().select("name");
+	// const product = await Product.find().select("name");
+
+	res.render("admin/updatecategory", {
+		// subcategory: subcategory,
+		category: category,
+		// product: product,
+	});
+});
+
+
+
 
 router.post(
 	"/updateproduct/:id",
@@ -239,7 +280,45 @@ router.post(
 );
 
 
+router.post(
+	"/updatecategory/:id",
+	isAuth,
+	upload.single("image"),
+	async (req, res) => {
+		if (!mongoose.isValidObjectId(req.params.id)) {
+			return res.status(400).send("Invalid product id");
+		}
 
+		const file = req.file;
+		let imagePath;
+
+		if (file) {
+			const fileName = req.file.filename;
+			const basePath = `https://res.cloudinary.com/dfsixliv3/image/upload/v1657608669/`;
+			imagePath = `${basePath}${fileName}`;
+		} else {
+			const category = await Category.findById(req.params.id);
+			imagePath = category.image;
+		}
+
+		const updateCategory = await Category.findByIdAndUpdate(
+			req.params.id,
+			{
+				name: req.body.name,
+				// price: req.body.price,
+				image: imagePath,
+				subcategory: req.body.subcategory,
+				product: req.body.product,
+				updated_at: Date.now(),
+			},
+			{
+				new: true,
+			}
+		);
+
+		res.redirect("/admin/category");
+	}
+);
 
 
 
