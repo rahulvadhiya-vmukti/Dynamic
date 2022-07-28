@@ -5,7 +5,7 @@
 <div class="wrapper">
   <%- include ('component/header.ejs') %> 
   
-  <!-- Left side column. contains the visiting and sidebar -->
+  <!-- Left side column. contains the box and sidebar -->
   <%- include ('component/aside.ejs') %> 
 
   <!-- Content Wrapper. Contains page content -->
@@ -31,33 +31,21 @@
         </div>
 
         <div class="col-sm-6">
-        <form role="form" enctype="multipart/form-data" action="addvisitingproduct" method="POST">
-          <h2>Add visitingproduct</h2>
+        <form role="form" enctype="multipart/form-data" action="addcategory" method="POST">
+          <h2>Add Category</h2>
             <div class="box-body">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" required class="form-control" id="name" name="name" placeholder="Enter name">
+                <input type="text" required class="form-control" id="name" name="name" placeholder="Enter category">
               </div>
-              <div class="form-group">
-                <label for="price">Price</label>
-                <input type="text" required class="form-control" id="price" name="price" placeholder="Enter price">
-              </div>
+             
+              
               <div class="form-group">
                 <label for="image">Add image</label>
                 <input type="file" required name="image" id="image">
               </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea name="description" required class="form-control" id="description" rows="5" placeholder="Enter description"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="visitingcategory">Choose category</label>
-                <select id="visitingcategory" name="visitingcategory">
-                    <% for( let i = 0; i < visitingcategory.length; i++ ) { %>
-                        <option value="<%- visitingcategory[i]._id %>"><%- visitingcategory[i].name %></option>
-                    <% } %>
-                </select>
-              </div>
+             
+            
             </div>
             <!-- /.box-body -->
 
