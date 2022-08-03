@@ -36,6 +36,8 @@ const storage = new CloudinaryStorage({
 	cloudinary: cloudinary,
 	params: {
 	  folder: "upload",
+	  allowedFormats: 'auto',
+      resource_type: 'auto',
 	},
 
   });
@@ -58,7 +60,9 @@ const storage = new CloudinaryStorage({
 // });
 
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+	storage: storage,
+ });
 
 router.get(`/`, isAuth, async (req, res) => {
 	// const order = await Order.countDocuments();
