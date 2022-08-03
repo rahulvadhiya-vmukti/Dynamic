@@ -175,6 +175,11 @@ document.formFood.onclick = function () {
   }
 };
 </script>
+<script>
+  function hide(event){
+    event.target.style.display = 'none'
+  }
+  </script>
 </head>
 
 
@@ -352,8 +357,16 @@ class="custom-content ">
                                              <div
                                                 data-anim-child="img-right -cover-dark-1 delay-1" class=portfolioCard__img__inner
                                                 >
-                                                <div
-                                                   class="ratio ratio-4:3 bg-image js-lazy" data-bg="<%- product[i].image %>"></div>
+                                                <img
+                                                   class="ratio ratio-4:3 bg-image js-lazy" src="<%- product[i].image %>"
+                                                   onerror = 'hide(event)'></img>
+                                                   
+                                                   <video class="ratio ratio-4:3 bg-image js-lazy" autoplay muted
+                                                   onerror = 'hide(event)'
+                                                    src="<%- product[i].image %>" type="video/mp4"
+                                                    >
+                                                  
+                                                  </video>
                                              </div>
                                           </a>
             
