@@ -9,44 +9,23 @@
       rel="stylesheet"
       href="https://bootswatch.com/4/journal/bootstrap.min.css"
     />
-    <title>Login - Alliance.Admin</title>
+    <title>Admin - Alliance</title>
   </head>
   <body>
-    
+    <h1 class="text-center">Welcome To Alliance Admin Panel</h1>
     <div class="row mt-5">
+      
       <div class="col-md-6 m-auto">
-        <div class="card card-body">
-          <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
-          <%- include('partials/messages') %>
-          <form action="/users/login" method="POST">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="form-control"
-                placeholder="Enter Email"
-              />
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                class="form-control"
-                placeholder="Enter Password"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-          </form>
-          <!-- <p class="lead mt-4">
-            No Account? <a href="/users/register">Register</a>
-          </p> -->
+        <div class="card card-body text-center">
+          <h1><i class="fa fa-users" aria-hidden="true"></i></h1>
+          <p>Create an account or login</p>
+          <!-- <a href="/users/register" class="btn btn-primary btn-block mb-2"
+            >Register</a> -->
+          <a href="/users/login" class="btn btn-secondary btn-block">Login</a>
         </div>
       </div>
     </div>
+
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
