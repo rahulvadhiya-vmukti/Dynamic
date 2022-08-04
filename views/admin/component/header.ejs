@@ -216,7 +216,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alliance </span>
+              <span class="hidden-xs"><%- user.name %> </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -224,7 +224,7 @@
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alliance  
+                  <%- user.name %> 
                   <small>Member since Nov. 2021</small>
                 </p>
               </li>
@@ -249,7 +249,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/" class="btn btn-default btn-flat">Back to web</a>
+                  <a href="/users/logout" class="btn btn-secondary">Logout</a>
                 </div>
               </li>
             </ul>

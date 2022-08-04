@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const { ensureAuthenticated, forwardAuthenticated } = require('../build/auth');
 
 const { Category } = require("../models/category");
 const { subCategory } = require("../models/subcategory");
@@ -39,37 +39,22 @@ const storage = new CloudinaryStorage({
 	  allowedFormats: 'auto',
       resource_type: 'auto',
 	},
+	
 
   });
-// const storage = multer.diskStorage({
-// 	destination: function (req, file, cb) {
-// 		const isValid = fileTypeMap[file.mimetype];
-// 		let uploadError = new Error("Invalid image type");
-
-// 		if (isValid) {
-// 			uploadError = null;
-// 		}
-// 		cb(uploadError, "public/uploads");
-// 	},
-// 	filename: function (req, file, cb) {
-// 		const fileName = file.originalname.replaceAll(" ", "-").split(".");
-// 		fileName.pop();
-// 		const extension = fileTypeMap[file.mimetype];
-// 		cb(null, `${fileName}-${Date.now()}.${extension}`);
-// 	},
-// });
-
 
 const upload = multer({ 
 	storage: storage,
  });
 
-router.get(`/`, isAuth, async (req, res) => {
+
+
+router.get(`/dashboard`, ensureAuthenticated, async(req, res) => {
 	// const order = await Order.countDocuments();
 	const product = await Product.countDocuments();
 	const category = await Category.countDocuments();
 	const subcategory = await subCategory.countDocuments();
-	const user = await User.countDocuments();
+	// const user = await User.countDocuments();
 	const contact = await Contact.countDocuments();
 
 	res.render("admin/index", {
@@ -77,7 +62,7 @@ router.get(`/`, isAuth, async (req, res) => {
 		product: product,
 		category: category,
 		subcategory: subcategory,
-		user: user,
+		user: req.user,
 		contact: contact,
 	});
 });
@@ -86,27 +71,31 @@ router.get(`/`, isAuth, async (req, res) => {
 
 
 
-router.get(`/category`, isAuth, async (req, res) => {
+router.get(`/category`, ensureAuthenticated,  async (req, res) => {
 	const category = await Category.find();
 	
 	res.render("admin/category", {
 		category: category,
+		user: req.user,
 	});
 });
 
-router.get(`/addcategory`, isAuth, async (req, res) => {
+router.get(`/addcategory`, ensureAuthenticated, async (req, res) => {
 
-	res.render("admin/addcategory", );
+	res.render("admin/addcategory", {
+		user: req.user,
+	});
 });
 
 
-router.post(`/addcategory`, upload.single("image"),isAuth, async (req, res) => {
+router.post(`/addcategory`, upload.single("image"),ensureAuthenticated, async (req, res) => {
 	const fileName = req.file.filename;
 	const basePath = `https://res.cloudinary.com/alliance2701/image/upload/v1658992130/`;
 	
 	let category = new Category({
 		name: req.body.name,
 		image: `${basePath}${fileName}`,
+		
 	});
 
 	category = await category.save();
@@ -118,7 +107,7 @@ router.post(`/addcategory`, upload.single("image"),isAuth, async (req, res) => {
 });
 
 
-router.get("/updatecategory", isAuth, async (req, res) => {
+router.get("/updatecategory", ensureAuthenticated, async (req, res) => {
 	const category = await Category.findOne({ _id: req.query.id }).populate(
 		// "subcategory","product"
 	);
@@ -128,6 +117,7 @@ router.get("/updatecategory", isAuth, async (req, res) => {
 	res.render("admin/updatecategory", {
 		// subcategory: subcategory,
 		category: category,
+		user: req.user,
 		// product: product,
 	});
 });
@@ -138,22 +128,26 @@ router.get("/updatecategory", isAuth, async (req, res) => {
 
 
 
-router.get("/subcategory", isAuth, async (req, res) => {
+router.get("/subcategory", ensureAuthenticated, async (req, res) => {
 	const subcategory = await subCategory.find();
 
 	res.render("admin/subcategory", {
 		subcategory: subcategory,
+		user: req.user,
 	});
 });
 
-router.get(`/addsubcategory`, isAuth, async (req, res) => {
+router.get(`/addsubcategory`, ensureAuthenticated, async (req, res) => {
 	const category = await Category.find().select("name");
 
-	res.render("admin/addsubcategory", { category: category });
+	res.render("admin/addsubcategory", { 
+		user: req.user,
+		category: category, 
+	});
 });
 
 
-router.post(`/addsubcategory`, isAuth,  async (req, res) => {
+router.post(`/addsubcategory`, ensureAuthenticated,  async (req, res) => {
 	// const fileName = req.file.filename;
 	// const basePath = `https://res.cloudinary.com/dfsixliv3/image/upload/v1657608669/`;
 	
@@ -172,7 +166,7 @@ router.post(`/addsubcategory`, isAuth,  async (req, res) => {
 });
 
 
-router.get("/updatesubcategory", isAuth, async (req, res) => {
+router.get("/updatesubcategory", ensureAuthenticated, async (req, res) => {
 	const subcategory = await subCategory.findOne({ _id: req.query.id }).populate(
 		"category"
 	);
@@ -182,35 +176,38 @@ router.get("/updatesubcategory", isAuth, async (req, res) => {
 	res.render("admin/updatesubcategory", {
 		subcategory: subcategory,
 		category: category,
-		
+		user: req.user,
 	});
 });
 
 
 
-router.get("/product", isAuth, async (req, res) => {
+router.get("/product", ensureAuthenticated, async (req, res) => {
 	const product = await Product.find();
 
 	res.render("admin/product", {
 		product: product,
+		user: req.user,
 	});
 });
 
-router.get(`/addproduct`, isAuth, async (req, res) => {
+router.get(`/addproduct`, ensureAuthenticated, async (req, res) => {
 	const category = await Category.find().select("name");
 	const subcategory = await subCategory.find().select("name");
-	res.render("admin/addproduct", { category: category, subcategory: subcategory});
+	res.render("admin/addproduct", { 
+		category: category, 
+		subcategory: subcategory,
+		user: req.user,
+	});
 });
 
-router.post(`/addproduct`, isAuth, upload.single("image"), async (req, res) => {
+router.post(`/addproduct`, ensureAuthenticated, upload.single("image"), async (req, res) => {
 	const fileName = req.file.filename;
-	const basePath = `https://res.cloudinary.com/alliance2701/image/upload/v1658992130/`;
+	const basePath = `https://res.cloudinary.com/alliance2701/image/upload/v1658992130`;
 
 	let product = new Product({
 		name: req.body.name,
-		
 		image: `${basePath}${fileName}`,
-		
 		subcategory: req.body.subcategory,
 		category: req.body.category,
 	});
@@ -224,7 +221,7 @@ router.post(`/addproduct`, isAuth, upload.single("image"), async (req, res) => {
 });
 
 
-router.get("/updateproduct", isAuth, async (req, res) => {
+router.get("/updateproduct", ensureAuthenticated, async (req, res) => {
 	const product = await Product.findOne({ _id: req.query.id }).populate(
 		"subcategory","category"
 	);
@@ -235,6 +232,7 @@ router.get("/updateproduct", isAuth, async (req, res) => {
 		subcategory: subcategory,
 		category: category,
 		product: product,
+		user: req.user,
 	});
 });
 
@@ -242,15 +240,14 @@ router.get("/updateproduct", isAuth, async (req, res) => {
 
 
 
-router.get("/productdetails", isAuth, async (req, res) => {
+router.get("/productdetails", ensureAuthenticated, async (req, res) => {
 	const product = await Product.findOne({ _id: req.query.id });
 
 	res.render("admin/productdetails", {
 		product: product,
+		user: req.user,
 	});
 });
-
-
 
 
 
@@ -259,8 +256,39 @@ router.get("/productdetails", isAuth, async (req, res) => {
 
 
 router.post(
+	"/updatesubcategory/:id",
+	ensureAuthenticated,
+	upload.single("image"),
+	async (req, res) => {
+		if (!mongoose.isValidObjectId(req.params.id)) {
+			return res.status(400).send("Invalid Subcategory id");
+		}
+
+		
+
+		const updatesubCategory = await subCategory.findByIdAndUpdate(
+			req.params.id,
+			{
+				name: req.body.name,
+				// price: req.body.price,
+				// image: imagePath,
+				// subcategory: req.body.subcategory,
+				category: req.body.category,
+				updated_at: Date.now(),
+			},
+			{
+				new: true,
+			}
+		);
+
+		res.redirect("/admin/subcategory");
+	}
+);
+
+
+router.post(
 	"/updateproduct/:id",
-	isAuth,
+	ensureAuthenticated,
 	upload.single("image"),
 	async (req, res) => {
 		if (!mongoose.isValidObjectId(req.params.id)) {
@@ -301,7 +329,7 @@ router.post(
 
 router.post(
 	"/updatecategory/:id",
-	isAuth,
+	ensureAuthenticated,
 	upload.single("image"),
 	async (req, res) => {
 		if (!mongoose.isValidObjectId(req.params.id)) {
@@ -343,7 +371,7 @@ router.post(
 
 
 
-router.get("/deletecategory/:id", isAuth,async (req, res) => {
+router.get("/deletecategory/:id", ensureAuthenticated,async (req, res) => {
 	
 		const category = await Category.findByIdAndRemove(req.params.id);
 			console.log("Removed")
