@@ -57,6 +57,13 @@ name="generator" content="Powered by WPBakery Page Builder - drag and drop page 
      event.target.style.display = 'none'
    }
    </script>
+   <script>
+      function onClick(element) {
+        document.getElementById("img01").src = element.src;
+        document.getElementById("modal01").style.display = "block";
+      }
+      </script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
 
@@ -138,20 +145,28 @@ class=clear></div>
                                        <div
                                           data-anim-wrap class="blogCard -type-1 -hover">
                                           <a
-                                             class=blogCard__img data-barba href=mobile-ui-design-7-basic-typography-rules-3/index.html >
+                                             class=blogCard__img data-barba  >
                                              <div
                                                 data-anim-child="img-right -cover-dark-1 delay-1" class=portfolioCard__img__inner>
                                                 <img
-                                                   class="ratio ratio-4:3 bg-image js-lazy" src="<%- product[i].image %>"  onerror = 'hide(event)' ></img>
+                                                   class="ratio ratio-4:3 bg-image js-lazy" src="<%- product[i].image %>"  
+                                                   onerror = 'hide(event)' 
+                                                   onclick="onClick(this)"></img>
 
-                                                   <video class="ratio ratio-4:3 bg-image js-lazy" autoplay muted onerror = 'hide(event)'
-                                                   src="<%- product[i].image %>" type="video/mp4"
+                                                   <video class="ratio ratio-4:3 bg-image js-lazy" autoplay muted controls onerror = 'hide(event)'
+                                                   src="<%- product[i].video %>" type="video/mp4"
                                                       >
                                                     
                                                     </video>
                                              </div>
                                           </a>
-            
+                                          <div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+                                             <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+                                             <div class="w3-modal-content w3-animate-zoom">
+                                               <img id="img01" style="width:100%" onerror = 'hide(event)'>
+                                               
+                                             </div>
+                                           </div>
                                        </div>
                                     </div>
                                    

@@ -204,13 +204,14 @@ router.get(`/addproduct`, isAuth, async (req, res) => {
 
 router.post(`/addproduct`, isAuth, upload.single("image"), async (req, res) => {
 	const fileName = req.file.filename;
+	
 	const basePath = `https://res.cloudinary.com/alliance2701/image/upload/v1658992130/`;
+	const videobasePath = `https://res.cloudinary.com/alliance2701/video/upload/v1658992130/`;
 
 	let product = new Product({
 		name: req.body.name,
-		
 		image: `${basePath}${fileName}`,
-		
+		video: `${videobasePath}${fileName}`,
 		subcategory: req.body.subcategory,
 		category: req.body.category,
 	});
@@ -269,14 +270,18 @@ router.post(
 
 		const file = req.file;
 		let imagePath;
+		let videoPath;
 
 		if (file) {
 			const fileName = req.file.filename;
 			const basePath = `https://res.cloudinary.com/alliance2701/image/upload/v1658992130/`;
+			const videobasePath = `https://res.cloudinary.com/alliance2701/video/upload/v1658992130/`;
 			imagePath = `${basePath}${fileName}`;
+			videoPath =`${videobasePath}${fileName}`;
 		} else {
 			const product = await Product.findById(req.params.id);
 			imagePath = product.image;
+			videoPath = product.video;
 		}
 
 		const updateProduct = await Product.findByIdAndUpdate(
@@ -285,6 +290,7 @@ router.post(
 				name: req.body.name,
 				// price: req.body.price,
 				image: imagePath,
+				video: videoPath,
 				subcategory: req.body.subcategory,
 				category: req.body.category,
 				updated_at: Date.now(),

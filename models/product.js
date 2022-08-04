@@ -8,6 +8,9 @@ const productSchema = mongoose.Schema(
         image: {
 			type: String,
 		},
+		video: {
+			type: String,
+		},
 		subcategory: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "subCategory",
