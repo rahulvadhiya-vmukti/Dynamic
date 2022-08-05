@@ -2,6 +2,20 @@
     color:white;
  }
 
+@media only screen and (max-width:700px){
+    .hidesection{
+        display: none;
+    }
+}
+
+@media only screen and (min-width:700px) and (max-width:3000px){
+    .mobilesection{
+        display: none;
+    }
+}
+
+
+
 .wpcf7 .screen-reader-response{position:absolute;overflow:hidden;clip:rect(1px, 1px, 1px, 1px);clip-path:inset(50%);height:1px;width:1px;margin:-1px;padding:0;border:0;word-wrap:normal !important}.wpcf7 form .wpcf7-response-output{margin:2em
 0.5em 1em;padding:0.2em 1em;border:2px
 solid #00a0d2}.wpcf7 form.init .wpcf7-response-output,
