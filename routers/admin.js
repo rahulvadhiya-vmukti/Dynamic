@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { ensureAuthenticated, forwardAuthenticated } = require('../build/auth');
+const { ensureAuthenticated, forwardAuthenticated } = require('../builds/auth');
 
 const { Category } = require("../models/category");
 const { subCategory } = require("../models/subcategory");
@@ -12,8 +12,8 @@ const { Contact } = require("../models/contact");
 
 const mongoose = require("mongoose");
 const multer = require("multer");
-const isAuth = require("../build/is-auth");
-const fileHelper = require("../build/file");
+const isAuth = require("../builds/is-auth");
+const fileHelper = require("../builds/file");
 
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");

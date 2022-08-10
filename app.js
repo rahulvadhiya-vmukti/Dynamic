@@ -1,12 +1,12 @@
 //Importing modules
 const express = require('express');
-
+const compression = require('compression');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const cors = require('cors');
-const errorHandler = require('./build/error-handler')
+const errorHandler = require('./builds/error-handler')
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -19,7 +19,7 @@ const CS = process.env.CONNECTION_STRING;
 const port = process.env.PORT || 5000;
 
 // Passport Config
-require('./build/passport')(passport);
+require('./builds/passport')(passport);
 
 //Importing all the routes
 const shopRouter = require('./routers/shop');
@@ -28,8 +28,10 @@ const searchRouter = require('./routers/search');
 
 
 //Middleware
+app.use(compression());
 
 app.use(express.json());
+
 app.use(morgan('tiny'));
 app.use(cors());
 app.options('*', cors());

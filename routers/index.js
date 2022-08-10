@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated, forwardAuthenticated } = require('../build/auth');
+const { ensureAuthenticated, forwardAuthenticated } = require('../builds/auth');
 
 // Welcome Page
 router.get('/adminlogin', forwardAuthenticated, (req, res) => res.render('welcome'));
