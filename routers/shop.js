@@ -103,14 +103,14 @@ router.post("/contact", (req,res)=>{
 		port: 465,
 		secure: true,
 		auth: {
-		  user: 'trendswalls@gmail.com',
-		  pass: 'uwvpyibraqjavhvs',
+		  user: 'superalliancedesign@gmail.com',
+		  pass: 'yshxnxspqjrxmicr',
 		}
 	});
   
 	var mailOptions = {
 		from: mailContent.email,
-		to: 'trendswalls@gmail.com',
+		to: 'superalliancedesign@gmail.com',
 		subject: mailContent.subject,
 		// subject: "mailContent.subject",
 		text: mailContent.name + " sent you a message : \n" + JSON.stringify(mailContent.message) + "\n Subject: " + mailContent.subject + "\n Email id: " + mailContent.email + "\n Phone no: " + mailContent.phone 
